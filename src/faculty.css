@@ -1,0 +1,61 @@
+/* faculty.css */
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Table Header */
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Table Body */
+table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Buttons */
+button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Styles for the container */
+div {
+  margin-bottom: 20px;
+}
+
+/* Styles for the labels and selects */
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select {
+  padding: 5px;
+}
+
+/* Error message */
+.error {
+  color: red;
+  margin-top: 10px;
+}
