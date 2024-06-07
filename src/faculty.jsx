@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import './faculty.css'; // Import your CSS file
+import './faculty.css';
 
 const Faculty = () => {
   const [students, setStudents] = useState([]);
@@ -58,7 +58,7 @@ const Faculty = () => {
         setStudents(updatedStudents);
       }
     } catch (error) {
-      console.error('Error updating student: ', error);
+      console.error('Error updating student:', error);
     }
   };
 
@@ -67,21 +67,20 @@ const Faculty = () => {
       await updateStudent(studentId, { status: 'present' });
       await updateStudentClasses(studentId, true);
     } catch (error) {
-      console.error('Error marking present: ', error);
+      console.error('Error marking present:', error);
     }
   };
 
-  const markAbsent = async (studentId, phoneNumber) => {
+  const markAbsent = async (studentId, studentName, rollNumber, subject, phoneNumber) => {
     try {
       await updateStudent(studentId, { status: 'absent' });
       await updateStudentClasses(studentId, false);
-      // Make a POST request to the backend server for sending the SMS
       const response = await fetch('/absent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phoneNumber }),
+        body: JSON.stringify({ studentName, rollNumber, subject, phoneNumber }),
       });
       if (response.ok) {
         // Display popup message if the SMS is sent successfully
@@ -90,11 +89,12 @@ const Faculty = () => {
         throw new Error('Failed to send SMS');
       }
     } catch (error) {
-      console.error('Error marking absent: ', error);
+      console.error('Error marking absent:', error);
     }
   };
   
   
+
   const updateStudentClasses = async (studentId, isPresent) => {
     try {
       const studentRef = doc(
@@ -114,7 +114,7 @@ const Faculty = () => {
         });
       }
     } catch (error) {
-      console.error('Error updating student classes: ', error);
+      console.error('Error updating student classes:', error);
     }
   };
 
@@ -167,8 +167,19 @@ const Faculty = () => {
                   <td>{student.status}</td>
                   <td>
                     <button onClick={() => markPresent(student.id)}>Present</button>
-                    <button onClick={() => markAbsent(student.id, student.phoneNo)}>Absent</button>
-                  </td>
+                    <button
+  onClick={() =>
+    markAbsent(
+      student.id,
+      student.name,
+      student.roll,
+      student.subject, // Replace with actual subject if available
+      student.phoneNo
+    )
+  }
+>
+  Absent
+</button>                  </td>
                 </tr>
               ))}
             </tbody>
