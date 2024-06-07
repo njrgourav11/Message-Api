@@ -25,11 +25,13 @@ app.post('/absent', async (req, res) => {
     const message = `Dear Parents,\nYour child ${studentName} bearing roll number ${rollNumber} is found absent on ${subject} class.\nRegards,\nNISTU`;
     
     // Send SMS
-    await client.messages.create({
+    const twilioResponse = await client.messages.create({
       body: message,
       from: process.env.TWILIO_FROM_NUMBER,
       to: process.env.TWILIO_TO_NUMBER
     });
+
+    console.log('Twilio Response:', twilioResponse);
 
     res.status(200).send('SMS sent successfully.');
   } catch (error) {
@@ -37,6 +39,7 @@ app.post('/absent', async (req, res) => {
     res.status(500).send('Error sending SMS.');
   }
 });
+
 
 // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
 app.get('*', (req, res) => {
