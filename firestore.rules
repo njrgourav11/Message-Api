@@ -1,7 +1,0 @@
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /batches/{batchId}/sections/{sectionId}/students/{studentId} {
-      allow read, write: if true;  // Adjust as needed for security
-    }
-  }
-}
