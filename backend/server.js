@@ -21,7 +21,7 @@ const client = twilio(accountSid, authToken);
 // Endpoint to handle absent button click and send SMS
 app.post('/absent', async (req, res) => {
   try {
-    const { studentName, rollNumber, subject, phoneNumber } = req.body;
+    const { studentName, rollNumber, subject } = req.body;
     const message = `Dear Parents,\nYour child ${studentName} bearing roll number ${rollNumber} is found absent on ${subject} class.\nRegards,\nNISTU`;
     
     // Send SMS
